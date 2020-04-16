@@ -1,0 +1,10 @@
+<phpunit colors="true">
+    <php>
+        <const name="NAMESPACE_FRAMEWORK" value="Comito"/>
+    </php>
+    <testsuites>
+        <testsuite name="hotel">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
