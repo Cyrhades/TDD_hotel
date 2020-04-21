@@ -16,7 +16,6 @@ class MongoDBTest extends TestGenericTDD
             ]
         );
     }
-
   
     public function testClassMongoExists()
     {
@@ -58,9 +57,9 @@ class MongoDBTest extends TestGenericTDD
         try {
             $classe = '\\'.NAMESPACE_FRAMEWORK.'\\Database\\MongoDB';
 
-            $clientMongoDB = $classe::getInstance();
+            $clientMongoDB = ($classe::getInstance())->getDatabase();
             $this->trueOrError(
-                $clientMongoDB->getDatabase()->listDatabases(),
+                (!empty($clientMongoDB->getDatabaseName())) ? true : false,
                 [
                     "1.3",
                     "La connexion à votre database MongoDB a échouée !"

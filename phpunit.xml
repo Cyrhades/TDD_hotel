@@ -1,10 +1,32 @@
 <phpunit colors="true">
     <php>
         <const name="NAMESPACE_FRAMEWORK" value="Comito"/>
+        <const name="HTTP_PORT" value="80"/>
     </php>
     <testsuites>
-        <testsuite name="hotel">
-            <directory>./</directory>
+        <testsuite name="server">
+            <file>./ServerHttpTest.php</file>
+        </testsuite>
+
+        <testsuite name="fixtures">
+            <file>./MongoDBTest.php</file>
+            <file>./FixturesCustomersTest.php</file>
+            <file>./FixturesRoomsTest.php</file>
+        </testsuite>
+
+        <testsuite name="fixtures-server">
+            <file>./MongoDBTest.php</file>
+        </testsuite>
+
+        <testsuite name="fixtures-customers">
+            <file>./FixturesCustomersTest.php</file>
+        </testsuite>
+        
+        <testsuite name="fixtures-rooms">
+            <file>./FixturesRoomsTest.php</file>
+        </testsuite>
+
+        <testsuite name="booking">
         </testsuite>
     </testsuites>
 </phpunit>
