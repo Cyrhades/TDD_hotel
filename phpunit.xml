@@ -26,6 +26,14 @@
             <file>./FixturesRoomsTest.php</file>
         </testsuite>
 
+        <testsuite name="homepage">
+            <file>./HomePageTest.php</file>
+        </testsuite>
+
+        <testsuite name="errors_http">
+            <file>./ErrorsHttpTest.php</file>
+        </testsuite>
+
         <testsuite name="booking">
         </testsuite>
     </testsuites>

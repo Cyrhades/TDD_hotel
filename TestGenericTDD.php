@@ -4,9 +4,9 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class TestGenericTDD extends TestCase
+abstract class TestGenericTDD extends TestCase
 {
-    public function trueOrError(bool $test, array $message) 
+    public function trueOrError(bool $test, array $message = []) 
     {
         if($test) {
             $this->assertTrue(true);

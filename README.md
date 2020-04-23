@@ -27,3 +27,11 @@ Pour lancer vos tests tapez la commande en étant placé à la racine de votre p
 
 - Lancer l'ensemble des tests des fixtures
 > ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite fixtures
+
+
+- Lancer les tests de la page d'accueil
+> ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite homepage
+
+- Lancer les tests sur les erreurs HTTP (404, 405)
+> ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite errors_http
+
