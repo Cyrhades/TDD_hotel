@@ -35,3 +35,8 @@ Pour lancer vos tests tapez la commande en étant placé à la racine de votre p
 - Lancer les tests sur les erreurs HTTP (404, 405)
 > ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite errors_http
 
+- Lancer les tests sur la page de réservation (affichage du formulaire)
+> ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite booking
+
+- Lancer les tests sur la page de réservation (soumission du formulaire)
+> ./vendor/bin/phpunit -c tests/phpunit.xml --testsuite booking-save

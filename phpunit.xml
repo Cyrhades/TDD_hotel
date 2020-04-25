@@ -35,6 +35,11 @@
         </testsuite>
 
         <testsuite name="booking">
+            <file>./BookingTest.php</file>       
+        </testsuite>
+
+        <testsuite name="booking-save">
+            <file>./BookingSaveTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

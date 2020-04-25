@@ -4,37 +4,28 @@ namespace Tests;
 
 use Comito\GenericSingleton\MongoDB;
 
-class HomePageTest extends TestGenericTDD
+class BookingTest extends TestGenericTDD
 {
     public function testServerInstall()
     {
-        $adresseHttp = 'http://127.0.0.1:'.HTTP_PORT;
+        $adresseHttp = 'http://127.0.0.1:'.HTTP_PORT.'/reservation';
         try {
             $client = new \GuzzleHttp\Client();
             $res = $client->request('GET', $adresseHttp);
             $this->trueOrError(
                 $res->getStatusCode() == 200, 
                 [
-                    "HOMEPAGE",
-                    "Votre serveur ne répond pas correctement à l'adresse ".$adresseHttp." avez vous mis le bon port et le bon répertoire (-t public)"
-                ]
-            );
-        } 
-        catch(\GuzzleHttp\Exception\ClientException $e) {
-            $this->trueOrError(
-                false, 
-                [
-                    "HOMEPAGE",
-                    "Votre serveur ne répond pas correctement à l'adresse ".$adresseHttp.", assurez vous d'avoir correctement créée la route \"/\" dans votre fichier app/routes.php"
+                    "Réservation",
+                    "Vous n'avez pas créée la route correctement \"/reservation\""
                 ]
             );
         }
-        catch(\GuzzleHttp\Exception\ConnectException $e) {
+        catch(\Throwable $e) {
             $this->trueOrError(
                 false, 
                 [
-                    "HOMEPAGE",
-                    "Le serveur n'existe pas à l'adresse ".$adresseHttp.", pensez à le démarrer et à modifier le fichier phpunit.xml ci nécessaire."
+                    "Réservation",
+                    "L'adresse ".$adresseHttp.", n'a pas répondu comme attendu."
                 ]
             );
         }
@@ -49,7 +40,7 @@ class HomePageTest extends TestGenericTDD
             $this->trueOrError(
                 false, 
                 [
-                    "HOMEPAGE",
+                    "Réservation",
                     "Le moteur de template Twig n'a pas été correctement installé !"
                 ]
             );
@@ -60,29 +51,50 @@ class HomePageTest extends TestGenericTDD
     public function testPage()
     {
         $minChars = 500;
-        $adresseHttp = 'http://127.0.0.1:'.HTTP_PORT;
+        $adresseHttp = 'http://127.0.0.1:'.HTTP_PORT.'/reservation';
         $client = new \GuzzleHttp\Client();
         $res = $client->request('GET', $adresseHttp);
         $content = $res->getBody();
 
         $this->trueOrError(
+            (strpos($content,'not found') !== false ? false : true), 
+            [
+                "Réservation",
+                "Pensez à créer les classes nécessaires à l'affichage de votre page." 
+            ]
+        );
+
+        
+        $this->trueOrError(
             (strlen($content) >= $minChars ? true : false), 
             [
-                "HOMEPAGE",
+                "Réservation",
                 "Votre page ne semble pas contenir une structure HTML compléte, un code d'au moins $minChars caractéres est attendu, vous en avez uniquement ".strlen($content) 
             ]
         );
 
-        foreach(['<!DOCTYPE html>','<html', '<head', '<title', '</title>', 'link', '</head>', '<body', '<header', '</header>', '<main', '</main>', '<nav', '</nav>','<footer','</footer>','</body>', '</html>'] as $tag) {
+        foreach(['<!DOCTYPE html>','<html', '<head', '<title', '</title>', 'link', '</head>', '<body', '<header', '</header>', '<main', '</main>', '<nav', 
+                    '<form', '</form', '<input', '</nav>','<footer','</footer>','</body>', '</html>'] as $tag) {
             $this->trueOrError(
                 preg_match('#'.preg_quote($tag).'#', $content) == 1,
                 [
-                    "HOMEPAGE",
+                    "Réservation",
                     "Votre code HTML ne semble pas respecter la structure imposée.".
-                    "\n". "Chargez au moins un fichier css, ainsi que les balises : header, main, nav, footer".
+                    "\n". "Pensez à créer le formulaire".
                     "\n"."Le tag : <".trim($tag, "<>")."> ne semble pas présent dans votre code !" 
                 ]
             );
         }
+        // permet de vérifier qu'il y a au moins 4 name dans le formulaire
+        preg_match_all('#name\=#U', $content, $matches);
+        $this->trueOrError(
+            count($matches[0]) >= 5,
+                [
+                    "Réservation",
+                    "Votre formulaire ne semble pas complet.".
+                    "\n". "Il est indispensable d'avoir l'attribut name sur tout vos champs !"
+                ]
+        );
+        
     }
 }
